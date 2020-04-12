@@ -3,6 +3,8 @@ const app = express()
 const hospital = require('./routes/hospital')
 const handlebars = require('express-handlebars')
 const path = require('path')
+const Sequelize = require('sequelize')
+const sequelize = require('./config/connection')
 
 // Configurations
     // Handlebars
