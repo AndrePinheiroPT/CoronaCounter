@@ -24,7 +24,7 @@ const bcrypt = require('bcryptjs')
 app.use('/hospital', hospital)
 
 app.get('/', (req, res) => {
-    res.render('login')
+    res.render('register')
 })
 
 app.post('/register', (req, res) => {
