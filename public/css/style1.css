@@ -1,0 +1,44 @@
+body{
+    background-color: #2F3245;
+    color: white;
+    font-family: 'arial';
+    text-align: center;
+}
+
+.form{
+    text-align: left;
+    border-radius: 6px;
+    margin: auto;
+    width: 300px;
+    padding: 15px;
+    background-color: #262938;
+}
+
+.form h3{
+    margin: 0px;
+    padding: 5px 5px 5px 0px;
+}
+
+.inputs{
+    border: none;
+    height: 30px;
+    width: 300px;
+    font-size: 15pt;
+    background-color: #40455E;
+    color: white;
+}
+
+.labels{
+    background-color: #1D202B;
+    padding: 5px;
+    font-size: 13pt;
+}
+
+.but-submit{
+    margin-top: 13px;
+    padding: 6px;
+    color: white;
+    background-color: #1D202B;
+    font-size: 13pt;
+    border: none;
+}
