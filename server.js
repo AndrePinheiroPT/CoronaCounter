@@ -23,7 +23,11 @@ const bcrypt = require('bcryptjs')
 // Routes
 app.use('/hospital', hospital)
 
-app.get('/', (req, res) => {
+app.get('/register', (req, res) => {
+    res.render('register')
+})
+
+app.get('/login', (req, res) => {
     res.render('login')
 })
 
