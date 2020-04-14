@@ -7,6 +7,7 @@ const Sequelize = require('sequelize')
 const db = require('./config/connection')
 const bodyparser = require('body-parser')
 const hospitals = require('./models/hospitals')
+const bcrypt = require('bcryptjs')
 
 // Configurations
     // Handlebars
@@ -34,11 +35,21 @@ app.post('/register', (req, res) => {
         raw: true
     }).then(hosp => {
         if(hosp.length == 0){
-            hospitals.create({
-                name: req.body.name,
-                password: req.body.password
-            })
-            res.redirect('/hospital')
+            try{
+                bcrypt.genSalt(10, function(err, salt) {
+                    bcrypt.hash(req.body.password, salt, function(err, hash) {
+                        hospitals.create({
+                            name: req.body.name,
+                            password: hash
+                        })
+                    })
+                })
+
+                res.redirect('/hospital')
+            }catch(error){
+               res.redirect('/')
+               console.log(error) 
+            }
         }else{
             res.redirect('/')
         }

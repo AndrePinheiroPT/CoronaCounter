@@ -6,7 +6,7 @@ const hospitals = db.define('hosp_accounts', {
         type: Sequelize.STRING(150)
     },
     password: {
-        type: Sequelize.STRING(40)
+        type: Sequelize.STRING
     }
 })
 
