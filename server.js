@@ -4,7 +4,7 @@ const hospital = require('./routes/hospital')
 const handlebars = require('express-handlebars')
 const path = require('path')
 const Sequelize = require('sequelize')
-const sequelize = require('./config/connection')
+const db = require('./config/connection')
 const bodyparser = require('body-parser')
 const hospitals = require('./models/hospitals')
 
