@@ -8,6 +8,7 @@ const db = require('./config/connection')
 const bodyparser = require('body-parser')
 const hospitals = require('./models/hospitals')
 const bcrypt = require('bcryptjs')
+const checkers = require('./helpers/checkers')
 
 // Configurations
     // Handlebars
@@ -32,34 +33,45 @@ app.get('/login', (req, res) => {
 })
 
 app.post('/register', (req, res) => {
-    hospitals.findAll({
-        where: {
-            name: req.body.name
-        },
-        raw: true
-    }).then(hosp => {
-        if(hosp.length == 0){
-            try{
-                bcrypt.genSalt(10, function(err, salt) {
-                    bcrypt.hash(req.body.password, salt, function(err, hash) {
-                        hospitals.create({
-                            name: req.body.name,
-                            password: hash
+    const errors = checkers.checkParams(
+        req.body.name,
+        req.body.password
+    )
+    if(errors.length == 0){
+        hospitals.findAll({
+            where: {
+                name: req.body.name
+            },
+            raw: true
+        }).then(hosp => {
+            if(hosp.length == 0){
+                try{
+                    bcrypt.genSalt(10, function(err, salt) {
+                        bcrypt.hash(req.body.password, salt, function(err, hash) {
+                            hospitals.create({
+                                name: req.body.name,
+                                password: hash
+                            })
                         })
                     })
-                })
 
-                res.redirect('/hospital')
-            }catch(error){
-               res.redirect('/')
-               console.log(error) 
+                    res.redirect('/login')
+                }catch(error){
+                res.redirect('/register')
+                console.log(error) 
+                }
+            }else{
+                res.redirect('/register')
             }
-        }else{
-            res.redirect('/')
+        }).catch(error => {
+            console.log(`> Error to find names: ${error}`)
+        })
+    }else{
+        for(const id in errors){
+            console.log(errors[id].text)
         }
-    }).catch(error => {
-        console.log(`> Error to find names: ${error}`)
-    })
+        res.redirect('/register')
+    }
 })
 
 // Server
