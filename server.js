@@ -40,6 +40,8 @@ initializePassport(passport)
     // Middlewares
         app.use((req, res, next) => {
             res.locals.error = req.flash('error')
+            res.locals.success_msg = req.flash('success_msg')
+            res.locals.error_msg = req.flash('error_msg')
             next()
         })
 // Routes
@@ -81,19 +83,21 @@ app.post('/register', (req, res) => {
                             })
                         })
                     })
-
+                    
                     res.redirect('/login')
                 }catch(error){
-                res.redirect('/register')
-                console.log(error) 
+                    res.redirect('/register')
+                    console.log(error) 
                 }
             }else{
+                req.flash('error_msg', {text: 'This hospital already exists!'})
                 res.redirect('/register')
             }
         }).catch(error => {
             console.log(`> Error to find names: ${error}`)
         })
     }else{
+        req.flash('error_msg', errors)
         for(const id in errors){
             console.log(errors[id].text)
         }

@@ -1,4 +1,7 @@
 <h1>CoronaCounter</h1>
+{{#each error_msg}}
+<p>{{text}}</p>
+{{/each}}
 <form class="form" action="/register" method="POST">
     <h3>Register New Hospital</h3>
     <hr>
