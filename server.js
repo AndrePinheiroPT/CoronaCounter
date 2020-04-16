@@ -9,18 +9,39 @@ const bodyparser = require('body-parser')
 const hospitals = require('./models/hospitals')
 const bcrypt = require('bcryptjs')
 const checkers = require('./helpers/checkers')
+const flash = require('connect-flash')
+const session = require('express-session')
+const passport = require('passport')
+const initializePassport = require('./config/auth')
+initializePassport(passport)
 
 // Configurations
     // Handlebars
-    app.engine('handlebars', handlebars({
-        defaultLayout: 'main'
-    }))
-    app.set('view engine', 'handlebars')
+        app.engine('handlebars', handlebars({
+            defaultLayout: 'main'
+        }))
+        app.set('view engine', 'handlebars')
     // Static Files
-    app.use(express.static(path.join(__dirname, 'public')))
+        app.use(express.static(path.join(__dirname, 'public')))
     // Body-Parser
-    app.use(bodyparser.urlencoded({extended: false}))
-    app.use(bodyparser.json())
+        app.use(bodyparser.urlencoded({extended: false}))
+        app.use(bodyparser.json())
+    // Session
+        app.use(session({
+            secret: 'sessionID',
+            resave: true,
+            saveUninitialized: true
+        }))
+    // PassPort
+        app.use(passport.initialize())
+        app.use(passport.session())
+    // Flash
+        app.use(flash())
+    // Middlewares
+        app.use((req, res, next) => {
+            res.locals.error = req.flash('error')
+            next()
+        })
 // Routes
 app.use('/hospital', hospital)
 
@@ -31,6 +52,12 @@ app.get('/register', (req, res) => {
 app.get('/login', (req, res) => {
     res.render('login')
 })
+
+app.post('/login', passport.authenticate('local', {
+    successRedirect: '/hospital',
+    failureRedirect: '/login',
+    failureFlash: true
+}))
 
 app.post('/register', (req, res) => {
     const errors = checkers.checkParams(
