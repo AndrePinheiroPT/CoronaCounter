@@ -1,8 +1,9 @@
 const express = require('express')
 const router = express.Router()
+const logged = require('../helpers/authenticate')
 
-router.get('/', (req, res) => {
-    res.send('Welcome to main page!')
+router.get('/', logged, (req, res) => {
+    res.render('hospital/home', {hosp: req.user[0]})
 })
 
 module.exports = router
