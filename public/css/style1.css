@@ -81,6 +81,15 @@ body{
     padding: 6px;
 }
 
+.error-msg{
+    background-color: #AD1002;
+    width: 500px;
+    padding: 5px;
+    margin: auto;
+    margin-bottom: 15px;
+    border-radius: 2px;
+}
+
 hr{
     height: 3px;
     background-color: #2F3245;
