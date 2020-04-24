@@ -6,6 +6,13 @@
 {{else}}
 
 {{/if}}
+{{#if success_msg}}
+    <div class="success-msg">
+        {{success_msg}}
+    </div>
+{{else}}
+
+{{/if}}
 <form class="form" action="/login" method="POST">
     <h3>Login Hospital</h3>
     <hr>

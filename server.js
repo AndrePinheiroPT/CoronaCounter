@@ -84,6 +84,7 @@ app.post('/register', (req, res) => {
                         })
                     })
                     
+                    req.flash('success_msg', 'The hospital was registed!')
                     res.redirect('/login')
                 }catch(error){
                     res.redirect('/register')

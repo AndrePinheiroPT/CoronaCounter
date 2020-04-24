@@ -83,7 +83,16 @@ body{
 
 .error-msg{
     background-color: #AD1002;
-    width: 500px;
+    width: 450px;
+    padding: 5px;
+    margin: auto;
+    margin-bottom: 15px;
+    border-radius: 2px;
+}
+
+.success-msg{
+    background-color: #05B32B;
+    width: 450px;
     padding: 5px;
     margin: auto;
     margin-bottom: 15px;
