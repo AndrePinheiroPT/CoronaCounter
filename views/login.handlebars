@@ -13,6 +13,13 @@
 {{else}}
 
 {{/if}}
+{{#if error_msg}}
+    <div class="error-msg">
+        {{error_msg}}
+    </div>
+{{else}}
+
+{{/if}}
 <form class="form" action="/login" method="POST">
     <h3>Login Hospital</h3>
     <hr>
