@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const hospital = require('./routes/hospital')
+const adm = require('./routes/adm')
 const handlebars = require('express-handlebars')
 const path = require('path')
 const Sequelize = require('sequelize')
@@ -46,6 +47,7 @@ initializePassport(passport)
         })
 // Routes
 app.use('/hospital', hospital)
+app.use('/adm', adm)
 
 app.get('/register', (req, res) => {
     res.render('register')
