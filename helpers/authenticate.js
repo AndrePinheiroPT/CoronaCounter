@@ -1,4 +1,4 @@
-function checkAuthenticate(req, res, next){
+function checkLoggedHospital(req, res, next){
     if(req.user){
         next()
     }else{
@@ -7,4 +7,21 @@ function checkAuthenticate(req, res, next){
     }
 }
 
-module.exports = checkAuthenticate
+function checkLoggedAdm(req, res, next){
+    if(req.user){
+        if(req.user[0].adm == 1){
+            next()
+        }else{
+            req.flash('error_msg', 'You are not administrator!')
+            res.redirect('/login')
+        }
+    }else{
+        req.flash('error_msg', 'You are not administrator!')
+        res.redirect('/login')
+    }
+}
+
+module.exports = {
+    checkAdm: checkLoggedAdm,
+    checkHospital: checkLoggedHospital
+}

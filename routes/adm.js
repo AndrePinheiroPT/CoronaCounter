@@ -1,8 +1,8 @@
 const express = require("express")
 const router = express.Router()
-const isAdm = require('../helpers/isAdm')
+//const checkers = require('../helpers/authenticate')
 
-router.get('/', isAdm, (req, res) => {
+router.get('/', (req, res) => {
     res.send("Welcome to the adm route!")
 })
 
