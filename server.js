@@ -49,10 +49,6 @@ initializePassport(passport)
 app.use('/hospital', hospital)
 app.use('/adm', adm)
 
-app.get('/register', (req, res) => {
-    res.render('register')
-})
-
 app.get('/login', (req, res) => {
     res.render('login')
 })
@@ -62,51 +58,6 @@ app.post('/login', passport.authenticate('local', {
     failureRedirect: '/login',
     failureFlash: true
 }))
-
-app.post('/register', (req, res) => {
-    const errors = checkers.checkParams(
-        req.body.name,
-        req.body.password
-    )
-    if(errors.length == 0){
-        hospitals.findAll({
-            where: {
-                name: req.body.name
-            },
-            raw: true
-        }).then(hosp => {
-            if(hosp.length == 0){
-                try{
-                    bcrypt.genSalt(10, function(err, salt) {
-                        bcrypt.hash(req.body.password, salt, function(err, hash) {
-                            hospitals.create({
-                                name: req.body.name,
-                                password: hash
-                            })
-                        })
-                    })
-                    
-                    req.flash('success_msg', 'The hospital was registed!')
-                    res.redirect('/login')
-                }catch(error){
-                    res.redirect('/register')
-                    console.log(error) 
-                }
-            }else{
-                req.flash('error_msg', {text: 'This hospital already exists!'})
-                res.redirect('/register')
-            }
-        }).catch(error => {
-            console.log(`> Error to find names: ${error}`)
-        })
-    }else{
-        req.flash('error_msg', errors)
-        for(const id in errors){
-            console.log(errors[id].text)
-        }
-        res.redirect('/register')
-    }
-})
 
 // Server
 app.listen(2020, () => {
