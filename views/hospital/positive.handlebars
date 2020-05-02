@@ -1,1 +1,31 @@
-<h1>Registe positive case!</h1>
+<h1 class="especial_h1">CoronaCounter</h1>
+<br>
+<div class="titles">
+    <h1>Registe new positive case!</h1>
+    <h3>Hospital: {{hospital.name}}</h3>
+</div>
+<br>
+<form class="form" action="hospital/positive" method="POST">
+    <h3>Positive Case</h3>
+    <hr>
+    <br>
+    <label class="labels" for="name">Complete Name: </label><br>
+    <input class="inputs" type="text" name="name" required>
+    <br>
+    <br>
+    <label class="labels" for="name">Age: </label><br>
+    <input class="inputs" type="number" name="name" required>
+    <br>
+    <br>
+    <label class="labels" for="name">Sex: </label><br>
+    <select name="sex" class="selects">
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+    </select>
+    <br>
+    <br>
+    <label class="labels" for="name">NIF: </label><br>
+    <input class="inputs" type="number" name="nif" placeholder="--- --- ---" required>
+    <br>
+    <button class="but-submit" type="submit">Registe</button>
+</form>
