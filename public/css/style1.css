@@ -99,6 +99,15 @@ body{
     border-radius: 2px;
 }
 
+.selects{
+    background-color: #40455E;
+    color: white;
+    width: 304px;
+    height: 30px;
+    border: none;
+    font-size: 15pt;
+}
+
 hr{
     height: 3px;
     background-color: #2F3245;
