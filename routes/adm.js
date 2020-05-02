@@ -43,12 +43,12 @@ router.post('/register', (req, res) => {
                     req.flash('success_msg', 'The hospital was registed!')
                     res.redirect('/login')
                 }catch(error){
-                    res.redirect('/register')
+                    res.redirect('/adm/register')
                     console.log(error) 
                 }
             }else{
                 req.flash('error_msg', {text: 'This hospital already exists!'})
-                res.redirect('/register')
+                res.redirect('/adm/register')
             }
         }).catch(error => {
             console.log(`> Error to find names: ${error}`)
@@ -58,7 +58,7 @@ router.post('/register', (req, res) => {
         for(const id in errors){
             console.log(errors[id].text)
         }
-        res.redirect('/register')
+        res.redirect('/adm/register')
     }
 })
 
