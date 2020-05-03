@@ -36,8 +36,8 @@ router.post('/positive', checkers.checkHospital, (req, res) => {
         nif: req.body.nif,
         state: 'POSITIVE'
     }).then(() => {
+        req.flash('success_msg', 'New positive case resgisted!')
         res.redirect('/hospital')
-        console.log(`> New positive case resgisted!`)
     }).catch(error => {
         console.log(`> Error to registe: ${error}!`)
     })
