@@ -5,6 +5,20 @@
     <h3>Hospital: {{hospital.name}}</h3>
 </div>
 <br>
+{{#if success_msg}}
+    <div class="success-msg">
+        {{success_msg}}
+    </div>
+{{else}}
+
+{{/if}}
+{{#if error_msg}}
+    <div class="error-msg">
+        {{error_msg}}
+    </div>
+{{else}}
+
+{{/if}}
 <div class="buttons">
     <p class="describe">Which the result of the test?</p>
     <hr>
