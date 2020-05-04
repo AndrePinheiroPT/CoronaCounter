@@ -28,6 +28,14 @@ router.get('/positive', checkers.checkHospital, (req, res) => {
     }
 })
 
+router.get('/negative', checkers.checkHospital, (req, res) => {
+    const hosp = req.user[0]
+
+    if(hospOrAdm(hosp)){
+        res.render('hospital/negative', {hospital: hosp})
+    }
+})
+
 router.post('/positive', checkers.checkHospital, (req, res) => {
     peoples.create({
         name: req.body.name,
