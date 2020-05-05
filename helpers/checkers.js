@@ -40,6 +40,8 @@ function checkDocs(name, age, sex, nif){
     }else if(nif.length > 9 || nif.length < 9){
         errors.push({text: 'The nif was incorrect!'})
     }
+
+    return errors
 }
 
 module.exports = {
