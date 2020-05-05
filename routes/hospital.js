@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const checkers = require('../helpers/authenticate')
+const check = require('../helpers/checkers')
 const peoples = require('../models/peoples')
 
 function hospOrAdm(user){
@@ -37,18 +38,26 @@ router.get('/negative', checkers.checkHospital, (req, res) => {
 })
 
 router.post('/positive', checkers.checkHospital, (req, res) => {
-    peoples.create({
-        name: req.body.name,
-        age: req.body.age,
-        sex: req.body.sex,
-        nif: req.body.nif,
-        state: 'POSITIVE'
-    }).then(() => {
-        req.flash('success_msg', 'New positive case resgisted!')
-        res.redirect('/hospital')
-    }).catch(error => {
-        console.log(`> Error to registe: ${error}!`)
-    })
+    const errors = check.checkDocs(req.body.name,
+        req.body.age,
+        req.body.sex,
+        req.body.nif
+        )
+
+    if(errors.length == 0){
+        peoples.create({
+            name: req.body.name,
+            age: req.body.age,
+            sex: req.body.sex,
+            nif: req.body.nif,
+            state: 'POSITIVE'
+        }).then(() => {
+            req.flash('success_msg', 'New positive case resgisted!')
+            res.redirect('/hospital')
+        }).catch(error => {
+            console.log(`> Error to registe: ${error}!`)
+        })
+    }
 })
 
 router.post('/negative', checkers.checkHospital, (req, res) => {
