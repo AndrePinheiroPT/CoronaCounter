@@ -57,22 +57,36 @@ router.post('/positive', checkers.checkHospital, (req, res) => {
         }).catch(error => {
             console.log(`> Error to registe: ${error}!`)
         })
+    }else{
+        req.flash('error_msg', errors)
+        res.redirect('/hospital/positive')
     }
 })
 
 router.post('/negative', checkers.checkHospital, (req, res) => {
-    peoples.create({
-        name: req.body.name,
-        age: req.body.age,
-        sex: req.body.sex,
-        nif: req.body.nif,
-        state: 'NEGATIVE'
-    }).then(() => {
-        req.flash('success_msg', 'New negative case registed!')
-        res.redirect('/hospital')
-    }).catch(error => {
-        console.log(`> Error to registe: ${error}!`)
-    })
+    const errors = check.checkDocs(req.body.name,
+        req.body.age,
+        req.body.sex,
+        req.body.nif
+        )
+    
+    if(errors.length == 0){
+        peoples.create({
+            name: req.body.name,
+            age: req.body.age,
+            sex: req.body.sex,
+            nif: req.body.nif,
+            state: 'NEGATIVE'
+        }).then(() => {
+            req.flash('success_msg', 'New negative case registed!')
+            res.redirect('/hospital')
+        }).catch(error => {
+            console.log(`> Error to registe: ${error}!`)
+        })
+    }else{
+        req.flash('error_msg', errors)
+        res.redirect('/hospital/negative')
+    }
 })
 
 router.get('/negative', checkers.checkHospital, (req, res) =>{ 

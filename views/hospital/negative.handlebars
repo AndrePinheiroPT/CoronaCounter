@@ -5,6 +5,12 @@
     <h3>Hospital: {{hospital.name}}</h3>
 </div>
 <br>
+{{#each error_msg}}
+    <div class="error-msg">
+        {{text}}
+    </div>
+{{/each}}
+<br>
 <form class="form" action="negative" method="POST">
     <h3>Positive Case</h3>
     <hr>
