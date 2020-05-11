@@ -71,17 +71,28 @@ router.post('/negative', checkers.checkHospital, (req, res) => {
         )
     
     if(errors.length == 0){
-        peoples.create({
-            name: req.body.name,
-            age: req.body.age,
-            sex: req.body.sex,
-            nif: req.body.nif,
-            state: 'NEGATIVE'
-        }).then(() => {
-            req.flash('success_msg', 'New negative case registed!')
-            res.redirect('/hospital')
-        }).catch(error => {
-            console.log(`> Error to registe: ${error}!`)
+        peoples.findAll({
+            where: {
+                name: req.body.name
+            },
+            raw: true
+        }).then(people => {
+            if(people.length == 0){
+                peoples.create({
+                    name: req.body.name,
+                    age: req.body.age,
+                    sex: req.body.sex,
+                    nif: req.body.nif,
+                    state: 'NEGATIVE'
+                }).then(() => {
+                    req.flash('success_msg', 'New negative case registed!')
+                    res.redirect('/hospital')
+                }).catch(error => {
+                    console.log(`> Error to registe: ${error}!`)
+                })
+            }else{
+                // STATE RECOVERED
+            }
         })
     }else{
         req.flash('error_msg', errors)
