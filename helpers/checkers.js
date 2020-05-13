@@ -25,17 +25,15 @@ function checkDocs(name, age, sex, nif){
         errors.push({text: 'Write the name!'})
     }
 
-    if(age == null || age == undefined || age.length == 0 || typeof age !== 'number'){
+    if(age == null || age == undefined || age.length == 0){
         errors.push({text: 'Write the age!'})
     }
 
     if(sex == null || sex == undefined || sex.length == 0){
         errors.push({text: 'Write the sex!'})
-    }else if(sex != 'male' || sex != 'female'){
-        errors.push({text: 'The sex was incorrect! '})
     }
 
-    if(nif == null || nif == undefined || nif.length == 0 || typeof age !== 'number'){
+    if(nif == null || nif == undefined || nif.length == 0){
         errors.push({text: 'Write the age!'})
     }else if(nif.length > 9 || nif.length < 9){
         errors.push({text: 'The nif was incorrect!'})
