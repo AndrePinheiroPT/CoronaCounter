@@ -92,6 +92,14 @@ router.post('/negative', checkers.checkHospital, (req, res) => {
                 })
             }else{
                 // STATE RECOVERED
+                peoples.update({
+                    state: 'RECOVERY'
+                }, {
+                    where: {
+                        name: req.body.name
+                    },
+                    raw: true
+                })
             }
         })
     }else{
