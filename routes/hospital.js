@@ -73,7 +73,9 @@ router.post('/negative', checkers.checkHospital, (req, res) => {
     if(errors.length == 0){
         peoples.findAll({
             where: {
-                name: req.body.name
+                name: req.body.name,
+                sex: req.body.sex,
+                nif: req.body.nif
             },
             raw: true
         }).then(people => {
