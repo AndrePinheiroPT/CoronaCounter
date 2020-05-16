@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../config/connection')
 
-const hospitals = db.define('hospitals', {
+const adms = db.define('adms', {
     name: {
         type: Sequelize.STRING(150)
     },
@@ -10,6 +10,6 @@ const hospitals = db.define('hospitals', {
     }
 })
 
-hospitals.sync()
+adms.sync()
 
-module.exports = hospitals
+module.exports = adms

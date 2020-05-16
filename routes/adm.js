@@ -13,11 +13,11 @@ router.get('/deleteHosp', check.checkAdm, (req, res) => {
     res.send('Delete Hospital')
 })
 
-router.get('/register', (req, res) => {
+router.get('/register', check.checkAdm, (req, res) => {
     res.render('register')
 })
 
-router.post('/register', (req, res) => {
+router.post('/register', check.checkAdm, (req, res) => {
     const errors = checkers.checkParams(
         req.body.name,
         req.body.password
