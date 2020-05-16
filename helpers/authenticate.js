@@ -1,3 +1,5 @@
+const adms = require('../models/adms')
+
 function checkLoggedHospital(req, res, next){
     if(req.user){
         next()
@@ -9,12 +11,19 @@ function checkLoggedHospital(req, res, next){
 
 function checkLoggedAdm(req, res, next){
     if(req.user){
-        if(req.user[0].adm == 1){
-            next()
-        }else{
-            req.flash('error_msg', 'You are not administrator!')
-            res.redirect('/login')
-        }
+        adms.findAll({
+            where: {
+                name: req.user[0].name
+            },
+            raw: true
+        }).then(adm => {
+            if(adm.length != 0){
+                next()
+            }else{
+                req.flash('error_msg', 'You are not administrator!')
+                res.redirect('/login')
+            }
+        })
     }else{
         req.flash('error_msg', 'You are not administrator!')
         res.redirect('/login')
