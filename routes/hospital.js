@@ -98,7 +98,9 @@ router.post('/negative', checkers.checkHospital, (req, res) => {
                     state: 'RECOVERY'
                 }, {
                     where: {
-                        name: req.body.name
+                        name: req.body.name,
+                        sex: req.body.sex,
+                        nif: req.body.nif
                     },
                     raw: true
                 })
