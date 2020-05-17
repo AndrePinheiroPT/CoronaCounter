@@ -3,14 +3,22 @@ const router = express.Router()
 const checkers = require('../helpers/authenticate')
 const check = require('../helpers/checkers')
 const peoples = require('../models/peoples')
+const adms = require('../models/adms')
 
 function hospOrAdm(user){
-    if(user.adm == 1){
-        res.redirect('/adm')
-        return false
-    }else{
-        return true
-    }
+    adms.findAll({
+        where: {
+            name: user.name
+        },
+        raw: true
+    }).then(adm => {
+        if(adm.length != 0){
+            res.redirect('/adm')
+            return false
+        }else{
+            return true
+        }
+    })
 }
 
 router.get('/', checkers.checkHospital, (req, res) => {
