@@ -5,7 +5,7 @@ const check = require('../helpers/checkers')
 const peoples = require('../models/peoples')
 const adms = require('../models/adms')
 
-function hospOrAdm(user){
+function hospOrAdm(user, req, res){
     adms.findAll({
         where: {
             name: user.name
@@ -24,7 +24,7 @@ function hospOrAdm(user){
 router.get('/', checkers.checkHospital, (req, res) => {
     const hosp = req.user[0]
 
-    if(hospOrAdm(hosp)){
+    if(hospOrAdm(hosp, req, res)){
         res.render('hospital/home', {hospital: hosp})
     }
 })
@@ -32,7 +32,7 @@ router.get('/', checkers.checkHospital, (req, res) => {
 router.get('/positive', checkers.checkHospital, (req, res) => { 
     const hosp = req.user[0]
 
-    if(hospOrAdm(hosp)){
+    if(hospOrAdm(hosp, req, res)){
         res.render('hospital/positive', {hospital: hosp})
     }
 })
@@ -40,7 +40,7 @@ router.get('/positive', checkers.checkHospital, (req, res) => {
 router.get('/negative', checkers.checkHospital, (req, res) => {
     const hosp = req.user[0]
 
-    if(hospOrAdm(hosp)){
+    if(hospOrAdm(hosp, req, res)){
         res.render('hospital/negative', {hospital: hosp})
     }
 })
