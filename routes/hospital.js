@@ -7,9 +7,10 @@ const adms = require('../models/adms')
 
 function hospOrAdm(user, req, res){
     // FIX THIS !
+    console.log(user)
     adms.findAll({
         where: {
-            name: user.name == "undefined" ? "NOT_USER" : user.name
+            name: user.name
         },
         raw: true
     }).then(adm => {

@@ -49,19 +49,30 @@ function initialize(passport){
         passwordField: 'password'
     }, authenticateUser))
 
-    passport.serializeUser((hosp, done) => {
-        console.log(hosp)
-        done(null, hosp[0].id)
+    passport.serializeUser((user, done) => {
+        console.log(user)
+        done(null, user[0].name)
     })
 
-    passport.deserializeUser((id, done) => {
-        adms.findAll({
+    passport.deserializeUser((name, done) => {
+        hospitals.findAll({
             where: {
-                id: id
+                name: name
             },
             raw: true
         }).then(hosp => {
-            done(null, hosp)
+            if(hosp.length == 0){
+                adms.findAll({
+                    where: {
+                        name: name
+                    },
+                    raw: true
+                }).then(adm => {
+                    done(null, adm)
+                })
+            }else{
+                done(null, hosp)
+            }
         })
     })
 }
