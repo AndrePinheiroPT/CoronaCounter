@@ -5,46 +5,20 @@ const check = require('../helpers/checkers')
 const peoples = require('../models/peoples')
 const adms = require('../models/adms')
 
-function hospOrAdm(user, req, res){
-    // FIX THIS !
-    console.log(user)
-    adms.findAll({
-        where: {
-            name: user.name
-        },
-        raw: true
-    }).then(adm => {
-        if(adm.length != 0){
-            res.redirect('/adm')
-            return false
-        }else{
-            return true
-        }
-    })
-}
 
 router.get('/', checkers.checkHospital, (req, res) => {
-    const hosp = req.user[0]
-
-    if(hospOrAdm(hosp, req, res)){
-        res.render('hospital/home', {hospital: hosp})
-    }
+    res.render('hospital/home', {hospital: req.user[0]})
+    
 })
 
 router.get('/positive', checkers.checkHospital, (req, res) => { 
-    const hosp = req.user[0]
+    res.render('hospital/positive', {hospital: req.user[0]})
 
-    if(hospOrAdm(hosp, req, res)){
-        res.render('hospital/positive', {hospital: hosp})
-    }
 })
 
 router.get('/negative', checkers.checkHospital, (req, res) => {
-    const hosp = req.user[0]
-
-    if(hospOrAdm(hosp, req, res)){
-        res.render('hospital/negative', {hospital: hosp})
-    }
+    res.render('hospital/negative', {hospital: req.user[0]})
+    
 })
 
 router.post('/positive', checkers.checkHospital, (req, res) => {
@@ -71,6 +45,11 @@ router.post('/positive', checkers.checkHospital, (req, res) => {
         req.flash('error_msg', errors)
         res.redirect('/hospital/positive')
     }
+})
+
+router.get('/negative', checkers.checkHospital, (req, res) =>{ 
+    res.render('hospital/negative', {hospital: req.user[0]})
+    
 })
 
 router.post('/negative', checkers.checkHospital, (req, res) => {
@@ -119,14 +98,6 @@ router.post('/negative', checkers.checkHospital, (req, res) => {
     }else{
         req.flash('error_msg', errors)
         res.redirect('/hospital/negative')
-    }
-})
-
-router.get('/negative', checkers.checkHospital, (req, res) =>{ 
-    const hosp = req.user[0]
-
-    if(hospOrAdm(hosp)){
-        res.render('hospital/negative', {hospital: hosp})
     }
 })
 
