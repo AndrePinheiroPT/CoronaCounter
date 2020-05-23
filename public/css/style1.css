@@ -81,6 +81,32 @@ body{
     padding: 6px;
 }
 
+.list{
+    text-align: left;
+    padding: 8px;
+    width: 400px;
+    margin: auto;
+    background-color: #40455E;
+    border-radius: 4px;
+}
+
+p{  
+    margin: 2px;
+    display: inline-block;
+}
+
+.delete-button{
+    float: right;
+    text-align: right;
+    text-decoration: none;
+    color: white;
+    background-color: #AD1002;
+    padding: 3px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 10px;
+}
+
 .error-msg{
     background-color: #AD1002;
     width: 450px;
