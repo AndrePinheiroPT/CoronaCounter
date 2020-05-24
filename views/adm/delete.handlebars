@@ -7,7 +7,9 @@
 <div class="list">
     {{#each hosps}}
     <p>{{name}}</p>
-    <a href="adm/deleteHosp/{{id}}" class="delete-button">Delete</a>
+    <a href="/adm/deleteHosp/{{id}}" class="delete-button">Delete</a>
     <hr>
+    {{else}}
+    <p>No hospitals registred!</p>
     {{/each}}
 </div>
