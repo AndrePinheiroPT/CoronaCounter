@@ -17,6 +17,32 @@ function checkParams(name, password){
     return errors
 }
 
+function checkDocs(name, age, sex, nif){
+
+    let errors = []
+
+    if(name == null || name == undefined || name.length == 0){
+        errors.push({text: 'Write the name!'})
+    }
+
+    if(age == null || age == undefined || age.length == 0){
+        errors.push({text: 'Write the age!'})
+    }
+
+    if(sex == null || sex == undefined || sex.length == 0){
+        errors.push({text: 'Write the sex!'})
+    }
+
+    if(nif == null || nif == undefined || nif.length == 0){
+        errors.push({text: 'Write the age!'})
+    }else if(nif.length > 9 || nif.length < 9){
+        errors.push({text: 'The nif was incorrect!'})
+    }
+
+    return errors
+}
+
 module.exports = {
-    checkParams: checkParams
+    checkParams: checkParams,
+    checkDocs: checkDocs
 }
