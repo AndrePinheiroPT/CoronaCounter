@@ -10,7 +10,11 @@ router.get('/', check.checkAdm, (req, res) => {
 })
 
 router.get('/deleteHosp', check.checkAdm, (req, res) => {
-    res.send('Delete Hospital')
+    hospitals.findAll({
+        raw: true
+    }).then(hosps => {
+        res.render('adm/delete', {hosps: hosps})
+    })
 })
 
 router.get('/register', check.checkAdm, (req, res) => {
