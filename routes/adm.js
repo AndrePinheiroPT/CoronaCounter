@@ -10,7 +10,23 @@ router.get('/', check.checkAdm, (req, res) => {
 })
 
 router.get('/deleteHosp', check.checkAdm, (req, res) => {
-    res.send('Delete Hospital')
+    hospitals.findAll({
+        raw: true
+    }).then(hosps => {
+        res.render('adm/delete', {hosps: hosps})
+    })
+})
+
+router.get('/deleteHosp/:id', check.checkAdm, (req, res) => {
+    try{
+        hospitals.destroy({where: {
+            id: req.params.id
+        }})
+    }catch(error){
+        console.log(`> Error to delete hospital: ${error}`)
+    }finally{
+        res.redirect('/adm/deleteHosp')
+    }
 })
 
 router.get('/register', check.checkAdm, (req, res) => {

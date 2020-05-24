@@ -5,7 +5,11 @@
 </div>
 <br>
 <div class="list">
-    <p>Braga Graças</p>
-    <a href="" class="delete-button">Delete</a>
+    {{#each hosps}}
+    <p>{{name}}</p>
+    <a href="/adm/deleteHosp/{{id}}" class="delete-button">Delete</a>
     <hr>
+    {{else}}
+    <p>No hospitals registred!</p>
+    {{/each}}
 </div>
