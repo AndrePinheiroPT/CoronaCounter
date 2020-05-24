@@ -18,15 +18,13 @@ router.get('/deleteHosp', check.checkAdm, (req, res) => {
 })
 
 router.get('/deleteHosp/:id', check.checkAdm, (req, res) => {
-    try{
-        hospitals.destroy({where: {
-            id: req.params.id
-        }})
-    }catch(error){
-        console.log(`> Error to delete hospital: ${error}`)
-    }finally{
+    hospitals.destroy({where: {
+        id: req.params.id
+    }}).then(() => {
         res.redirect('/adm/deleteHosp')
-    }
+    }).catch(error => {
+        console.log(`> Error to delete hospital: ${error}`)
+    })
 })
 
 router.get('/register', check.checkAdm, (req, res) => {
