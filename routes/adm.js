@@ -21,8 +21,11 @@ router.get('/deleteHosp/:id', check.checkAdm, (req, res) => {
     hospitals.destroy({where: {
         id: req.params.id
     }}).then(() => {
+        req.flash('success_msg', 'Hospital successfully removed!')
         res.redirect('/adm/deleteHosp')
     }).catch(error => {
+        req.flash('error_msg', 'Error to remove the hospital!')
+        res.redirect('/adm/deleteHosp')
         console.log(`> Error to delete hospital: ${error}`)
     })
 })
