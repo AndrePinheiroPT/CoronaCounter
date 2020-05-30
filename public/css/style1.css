@@ -139,3 +139,12 @@ hr{
     background-color: #2F3245;
     border: none;
 }
+
+.count{
+    margin: 0px;
+    font-size: 25pt;
+}
+
+.large-p{
+    font-size: 16pt;
+}
