@@ -49,6 +49,10 @@ initializePassport(passport)
 app.use('/hospital', hospital)
 app.use('/adm', adm)
 
+app.get('/', (req, res) => {
+    res.render('home')
+})
+
 app.get('/login', (req, res) => {
     res.render('login')
 })
