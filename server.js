@@ -8,6 +8,7 @@ const Sequelize = require('sequelize')
 const db = require('./config/connection')
 const bodyparser = require('body-parser')
 const hospitals = require('./models/hospitals')
+const peoples = require('./models/peoples')
 const bcrypt = require('bcryptjs')
 const checkers = require('./helpers/checkers')
 const flash = require('connect-flash')
@@ -50,7 +51,29 @@ app.use('/hospital', hospital)
 app.use('/adm', adm)
 
 app.get('/', (req, res) => {
-    res.render('home')
+    peoples.findAll({
+        raw: true
+    }).then(list => {
+        let NPR = [0, 0, 0]
+        for(const id in list){
+            switch(list[id].state){
+                case 'NEGATIVE':
+                    NPR[0]++
+                    break
+                case 'POSITIVE':
+                    NPR[1]++
+                    break
+                case 'RECOVERY':
+                    NPR[2]++
+                    break
+            }
+        }
+        res.render('home',{
+            negative: NPR[0],
+            positive: NPR[1],
+            recovery: NPR[2]
+        })
+    })
 })
 
 app.get('/login', (req, res) => {
