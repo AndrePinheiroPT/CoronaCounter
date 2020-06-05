@@ -69,6 +69,7 @@ app.get('/', (req, res) => {
             }
         }
         res.render('home',{
+            registered: list.length,
             negative: NPR[0],
             positive: NPR[1],
             recovery: NPR[2]
