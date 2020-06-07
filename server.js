@@ -4,13 +4,8 @@ const hospital = require('./routes/hospital')
 const adm = require('./routes/adm')
 const handlebars = require('express-handlebars')
 const path = require('path')
-const Sequelize = require('sequelize')
-const db = require('./config/connection')
 const bodyparser = require('body-parser')
-const hospitals = require('./models/hospitals')
 const peoples = require('./models/peoples')
-const bcrypt = require('bcryptjs')
-const checkers = require('./helpers/checkers')
 const flash = require('connect-flash')
 const session = require('express-session')
 const passport = require('passport')
@@ -54,25 +49,31 @@ app.get('/', (req, res) => {
     peoples.findAll({
         raw: true
     }).then(list => {
-        let NPR = [0, 0, 0]
+
+        let state = {
+            negative: 0,
+            positive: 0,
+            recovery: 0
+        }
+
         for(const id in list){
             switch(list[id].state){
                 case 'NEGATIVE':
-                    NPR[0]++
+                    state.negative++
                     break
                 case 'POSITIVE':
-                    NPR[1]++
+                    state.positive++
                     break
                 case 'RECOVERY':
-                    NPR[2]++
+                    state.recovery++
                     break
             }
         }
         res.render('home',{
             registered: list.length,
-            negative: NPR[0],
-            positive: NPR[1],
-            recovery: NPR[2]
+            negative: state.negative,
+            positive: state.positive,
+            recovery: state.recovery
         })
     })
 })
