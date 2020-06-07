@@ -3,8 +3,6 @@ const router = express.Router()
 const checkers = require('../helpers/authenticate')
 const check = require('../helpers/checkers')
 const peoples = require('../models/peoples')
-const adms = require('../models/adms')
-
 
 router.get('/', checkers.checkHospital, (req, res) => {
     res.render('hospital/home', {hospital: req.user[0]})
@@ -20,6 +18,11 @@ router.get('/negative', checkers.checkHospital, (req, res) => {
     res.render('hospital/negative', {hospital: req.user[0]})
     
 })
+
+router.get('/inconclusive', checkers.checkHospital, (req, res) => {
+    res.render('hospital/inconclusive', {hospital: req.user[0]})
+})
+
 
 router.post('/positive', checkers.checkHospital, (req, res) => {
     const errors = check.checkDocs(req.body.name,
@@ -71,11 +74,6 @@ router.post('/positive', checkers.checkHospital, (req, res) => {
         req.flash('error_msg', errors)
         res.redirect('/hospital/positive')
     }
-})
-
-router.get('/negative', checkers.checkHospital, (req, res) =>{ 
-    res.render('hospital/negative', {hospital: req.user[0]})
-    
 })
 
 router.post('/negative', checkers.checkHospital, (req, res) => {
@@ -139,10 +137,6 @@ router.post('/negative', checkers.checkHospital, (req, res) => {
         req.flash('error_msg', errors)
         res.redirect('/hospital/negative')
     }
-})
-
-router.get('/inconclusive', checkers.checkHospital, (req, res) => {
-    res.render('hospital/inconclusive', {hospital: req.user[0]})
 })
 
 router.post('/inconclusive', checkers.checkHospital, (req, res) => {
