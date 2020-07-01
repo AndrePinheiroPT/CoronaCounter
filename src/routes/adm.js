@@ -3,14 +3,31 @@ const router = express.Router()
 const check = require('../helpers/authenticate')
 const bcrypt = require('bcryptjs')
 const checkers = require('../helpers/checkers')
-const hospitals = require('../models/hospitals')
+const hospitals = require('../../models/hospitals')
 
 router.get('/', check.checkAdm, (req, res) => {
     res.render('adm/home')
 })
 
 router.get('/deleteHosp', check.checkAdm, (req, res) => {
-    res.send('Delete Hospital')
+    hospitals.findAll({
+        raw: true
+    }).then(hosps => {
+        res.render('adm/delete', {hosps: hosps})
+    })
+})
+
+router.get('/deleteHosp/:id', check.checkAdm, (req, res) => {
+    hospitals.destroy({where: {
+        id: req.params.id
+    }}).then(() => {
+        req.flash('success_msg', 'Hospital successfully removed!')
+        res.redirect('/adm/deleteHosp')
+    }).catch(error => {
+        req.flash('error_msg', 'Error to remove the hospital!')
+        res.redirect('/adm/deleteHosp')
+        console.log(`> Error to delete hospital: ${error}`)
+    })
 })
 
 router.get('/register', check.checkAdm, (req, res) => {

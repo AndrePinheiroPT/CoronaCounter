@@ -1,0 +1,27 @@
+<h1 class="especial_h1">CoronaCounter</h1>
+<br>
+<div class="titles">
+    <h1>Delete Hospital</h1>
+</div>
+<br>
+{{#if error_msg}}
+    <div class="error-msg">
+        {{error_msg}}
+    </div>
+{{else}}
+{{/if}}
+{{#if success_msg}}
+    <div class="success-msg">
+        {{success_msg}}
+    </div>
+{{else}}
+{{/if}}
+<div class="list">
+    {{#each hosps}}
+    <p>{{name}}</p>
+    <a href="/adm/deleteHosp/{{id}}" class="delete-button">Delete</a>
+    <hr>
+    {{else}}
+    <p>No hospitals registred!</p>
+    {{/each}}
+</div>
