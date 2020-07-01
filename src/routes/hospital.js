@@ -1,9 +1,9 @@
 const express = require('express')
 const router = express.Router()
-const checkers = require('../helpers/authenticate')
-const check = require('../helpers/checkers')
-const peoples = require('../models/peoples')
-const adms = require('../models/adms')
+const checkers = require('../../helpers/authenticate')
+const check = require('../../helpers/checkers')
+const peoples = require('../../models/peoples')
+const adms = require('../../models/adms')
 
 function hospOrAdm(user, req, res){
     // FIX THIS !
