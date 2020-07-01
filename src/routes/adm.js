@@ -3,7 +3,7 @@ const router = express.Router()
 const check = require('../helpers/authenticate')
 const bcrypt = require('bcryptjs')
 const checkers = require('../helpers/checkers')
-const hospitals = require('../models/hospitals')
+const hospitals = require('../../models/hospitals')
 
 router.get('/', check.checkAdm, (req, res) => {
     res.render('adm/home')
