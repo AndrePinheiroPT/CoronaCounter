@@ -7,6 +7,7 @@ const PeopleController = require('./controllers/PeopleController')
 const hospitalController = new HospitalController
 const peopleController = new PeopleController
 
+router.get('/', (req, res) => res.redirect('/peoples'))
 router.get('/hospital', hospitalController.index)
 router.get('/peoples', peopleController.index)
 router.post('/new-people', peopleController.store)

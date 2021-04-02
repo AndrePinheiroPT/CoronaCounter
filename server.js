@@ -24,10 +24,6 @@ initializePassport(passport)
 // Routes
 app.use('/', mainRoute)
 
-app.get('/', (req, res) => {
-    res.redirect('/peoples')
-})
-
 app.get('/login', (req, res) => {
     res.render('login')
 })

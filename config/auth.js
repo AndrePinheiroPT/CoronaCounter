@@ -3,45 +3,35 @@ const hospitals = require('../models/hospitals')
 const adms = require('../models/adms')
 const bcrypt = require('bcryptjs')
 
-function initialize(passport){
+async function initialize(passport){
     const authenticateUser = (name, password, done) => {
-        hospitals.findAll({
-            where: {
-                name: name
-            },
-            raw: true
-        }).then(hosp => {
-            if(hosp.length == 0){
-                adms.findAll({
-                    where: {
-                        name: name
-                    },
-                    raw: true
-                }).then(adm => {
-                    if(adm.length == 0){
-                        console.log(`> Invalid hospital`)
-                        return done(null, false, {message: 'This hospital doesnt exist!'})
-                    }else{
-                        bcrypt.compare(password, adm[0].password, (error, result) => {
-                            if(result){
-                                console.log('MASTER LOGGED!')
-                                return done(null, adm)
-                            }else{
-                                return done(null, false, {message: 'The password has incorrect!'})
-                            }
-                        })
-                    }
-                })
+        const hospital = await hospitals.findOne({where: {name: name}, raw: true})
+
+        if(hospital.length == 0){
+            const adm = await adms.findOne({where: {name: name}, raw: true})
+
+            if(adm.length == 0){
+                console.log(`> Invalid hospital`)
+                return done(null, false, {message: 'This hospital doesnt exist!'})
             }else{
-                bcrypt.compare(password, hosp[0].password, (error, result) => {
+                bcrypt.compare(password, adm.password, (error, result) => {
                     if(result){
-                        return done(null, hosp)
+                        console.log('> MASTER LOGGED!')
+                        return done(null, adm)
                     }else{
                         return done(null, false, {message: 'The password has incorrect!'})
                     }
                 })
             }
-        })
+        }else{
+            bcrypt.compare(password, hospital.password, (error, result) => {
+                if(result){
+                    return done(null, hospital)
+                }else{
+                    return done(null, false, {message: 'The password has incorrect!'})
+                }
+            })
+        }
     }
 
     passport.use(new LocalStrategy({
@@ -50,30 +40,19 @@ function initialize(passport){
     }, authenticateUser))
 
     passport.serializeUser((user, done) => {
-        console.log(user)
-        done(null, user[0].name)
+        console.log(`> User logged: ${user}`)
+        done(null, user.name)
     })
 
     passport.deserializeUser((name, done) => {
-        hospitals.findAll({
-            where: {
-                name: name
-            },
-            raw: true
-        }).then(hosp => {
-            if(hosp.length == 0){
-                adms.findAll({
-                    where: {
-                        name: name
-                    },
-                    raw: true
-                }).then(adm => {
-                    done(null, adm)
-                })
-            }else{
-                done(null, hosp)
-            }
-        })
+        const hospital = await hospitals.findAll({where: {name: name}, raw: true})
+
+        if(hospital.length == 0){
+            const adm = await adms.findAll({where: {name: name}, raw: true})
+            done(null, adm)
+        }else{
+            done(null, hospital)
+        }
     })
 }
 
