@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const mainRoute = require('./src/routes')
+const admRoute = require('./src/routes/adm')
 
 const path = require('path')
 const session = require('express-session')
@@ -23,7 +24,7 @@ initializePassport(passport)
 
 // Routes
 app.use('/', mainRoute)
-
+app.use('/admin', admRoute)
 
 app.get('/login', (req, res) => {
     res.render('login')
