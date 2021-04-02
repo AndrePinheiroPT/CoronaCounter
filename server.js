@@ -24,7 +24,6 @@ initializePassport(passport)
 
 // Routes
 app.use('/', mainRoute)
-app.use('/admin', admRoute)
 
 app.get('/login', (req, res) => {
     res.render('login')
