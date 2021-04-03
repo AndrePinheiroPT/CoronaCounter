@@ -1,4 +1,4 @@
-const adms = require('../models/adms')
+const adms = require('../../models/adms')
 
 function checkLoggedHospital(req, res, next){
     if(req.user){

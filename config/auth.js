@@ -4,7 +4,7 @@ const adms = require('../models/adms')
 const bcrypt = require('bcryptjs')
 
 async function initialize(passport){
-    const authenticateUser = (name, password, done) => {
+    const authenticateUser = async (name, password, done) => {
         const hospital = await hospitals.findOne({where: {name: name}, raw: true})
 
         if(hospital.length == 0){
@@ -44,7 +44,7 @@ async function initialize(passport){
         done(null, user.name)
     })
 
-    passport.deserializeUser((name, done) => {
+    passport.deserializeUser(async (name, done) => {
         const hospital = await hospitals.findAll({where: {name: name}, raw: true})
 
         if(hospital.length == 0){

@@ -2,24 +2,69 @@ const peoples = require('../../models/peoples')
 const { checkDocs } = require('../helpers/checkers')
 
 class PeopleController{
-    async index(req, res){
+    async peopleList(req, res){
         const peoplesList = await peoples.findAll({ raw: true })
 
-        res.json(peoplesList)
+        res.status(400).json(peoplesList)
     }
 
-    async store(req, res){
-        const { name, age, sex, nif, state } = req.body
-        const errors = checkDocs(name, age, sex, nif)
+    async peopleStates(req, res){
+        try{
+            const peoplesList = await peoples.findAll({ raw: true })
 
-        if(errors.length == 0){
-            try{
-                const newPeople = await peoples.create({ name, age, sex, nif, state })
-    
-                res.json(newPeople)
-            }catch(err){
-                console.log(err)
+            const stateLength = {
+                positive: 0,
+                negative: 0,
+                recovered: 0,
+                inconclusive: 0,
             }
+
+            peoplesList.forEach(person => {
+                switch(person.state){
+                    case 'POSITIVE':
+                        stateLength.positive++
+                        break
+                    case 'NEGATIVE':
+                        stateLength.negative++
+                        break
+                    case 'RECOVERED':
+                        stateLength.recovered++
+                        break
+                    default:
+                        stateLength.inconclusive++
+                }
+            })
+
+            res.status(400).json(stateLength)
+        }catch(err){
+            console.log(err)
+            return res.status(400).send(err)
+        }
+    } 
+
+    async peopleCreate(req, res){
+        try{
+            const { name, age, sex, nif, state } = req.body
+            const errors = checkDocs(name, age, sex, nif)
+
+            if(errors.length == 0){
+                
+                const person = await peoples.findOne({ where: { name: name }, raw: true })
+
+                if(person === null){
+                    const newPerson = await peoples.create({ name, age, sex, nif, state })
+                    res.status(400).json(newPerson)
+                }else{
+                    peoples.update({
+                        state: state
+                    }, { where: { name: name }})
+                    res.status(400).json(person)
+                }
+                
+            }
+        }catch(err){
+            console.log(err)
+            return res.status(400).send(err)
         }
     }
 }

@@ -1,8 +1,7 @@
 const express = require('express')
 const app = express()
 const mainRoute = require('./src/routes')
-const admRoute = require('./src/routes/adm')
-
+const bodyParser = require('body-parser')
 const path = require('path')
 const session = require('express-session')
 const passport = require('passport')
@@ -21,6 +20,9 @@ initializePassport(passport)
     // PassPort
         app.use(passport.initialize())
         app.use(passport.session())
+    // BodyParser
+        app.use(bodyParser.json()) // for parsing application/json
+        app.use(bodyParser.urlencoded({ extended: true }))
 
 // Routes
 app.use('/', mainRoute)
