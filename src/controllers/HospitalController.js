@@ -5,56 +5,54 @@ const hospitals = require('../../models/hospitals')
 
 class HospitalController{
     async hospitalList(req, res){
-        const hospitalsPack = await hospitals.findAll({raw: true})
-
-        res.status(400).json(hospitalsPack)
+        try{
+            const hospitalsPack = await hospitals.findAll({raw: true})
+            res.status(400).json(hospitalsPack)
+        }catch(err){
+            console.log(err)
+            return res.status(400).send(err)
+        }
     }
 
     async hospitalRemove(req, res){
         try{
             hospitals.destroy({where: {id: req.params.id}})
 
-            console.log('> Hospital successfully removed!')
-        }catch(error){
-            console.log(`> Error to delete hospital: ${error}`)
+            return res.status(400).send('Hospital successfully removed!')
+        }catch(err){
+            return res.status(400).send(err)
         }
     }
 
     async hospitalCreate(req, res){
-        const { name, password } = req.body
-        const errors = checkParams(name, password)
+        try{
+            const { name, password } = req.body
+            const errors = checkParams(name, password)
 
-        if(errors.length == 0){
-            try{
+            if(errors.length == 0){
                 const hospitalsPack = await hospitals.findAll({where: {name: name}, raw: true})
 
                 if(hospitalsPack.length == 0){
-                    try{
-                        bcrypt.genSalt(10, function(err, salt) {
-                            bcrypt.hash(password, salt, function(err, hash) {
-                                hospitals.create({
-                                    name: name,
-                                    password: hash
-                                })
+                    
+                    bcrypt.genSalt(10, function(err, salt) {
+                        bcrypt.hash(password, salt, function(err, hash) {
+                            hospitals.create({
+                                name: name,
+                                password: hash
                             })
                         })
-                        
-                        console.log('> The hospital was registed!')
-                    }catch(error){
-                        console.log(error) 
-                    }
+                    })
+                    
+                    return res.status(400).send('The hospital was registed!')
                 }else{
-                    console.log('> This hospital already exists!')
+                    return res.status(400).send('This hospital already exists!')
                 }
-            }catch(error){
-                console.log(`> Error to find names: ${error}`)
+                
+            }else{
+                return res.status(400).json(errors)
             }
-            
-        }else{
-            console.log('> Its impossible create the hospital. ERRORS: ')
-            for(const id in errors){
-                console.log(errors[id].text)
-            }
+        }catch(err){
+            return res.status(400).send(err)
         }
     }
 }
