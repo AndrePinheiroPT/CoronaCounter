@@ -7,7 +7,7 @@ class HospitalController{
     async hospitalList(req, res){
         try{
             const hospitalsPack = await hospitals.findAll({raw: true})
-            res.status(400).json(hospitalsPack)
+            return res.status(400).json(hospitalsPack)
         }catch(err){
             console.log(err)
             return res.status(400).send(err)
@@ -18,9 +18,9 @@ class HospitalController{
         try{
             hospitals.destroy({where: {id: req.params.id}})
 
-            return res.status(400).send('Hospital successfully removed!')
+            return res.status(200).send('Hospital successfully removed!')
         }catch(err){
-            return res.status(400).send(err)
+            return res.status(500).send(err)
         }
     }
 
@@ -43,16 +43,24 @@ class HospitalController{
                         })
                     })
                     
-                    return res.status(400).send('The hospital was registed!')
+                    return res.status(201).send('The hospital was registed!')
                 }else{
-                    return res.status(400).send('This hospital already exists!')
+                    return res.status(200).send('This hospital already exists!')
                 }
                 
             }else{
-                return res.status(400).json(errors)
+                return res.status(200).json(errors)
             }
         }catch(err){
-            return res.status(400).send(err)
+            return res.status(500).send(err)
+        }
+    }
+
+    async hospitalLogin(req, res){
+        try{
+
+        }catch(err){
+            return res.status(500).send(err)
         }
     }
 }

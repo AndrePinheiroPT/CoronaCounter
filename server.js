@@ -4,9 +4,6 @@ const mainRoute = require('./src/routes')
 const bodyParser = require('body-parser')
 const path = require('path')
 const session = require('express-session')
-const passport = require('passport')
-const initializePassport = require('./config/auth')
-initializePassport(passport)
 
 // Configurations
     // Static Files
@@ -25,17 +22,7 @@ initializePassport(passport)
         app.use(bodyParser.urlencoded({ extended: true }))
 
 // Routes
-app.use('/', mainRoute)
-
-app.get('/login', (req, res) => {
-    res.render('login')
-})
-
-app.post('/login', passport.authenticate('local', {
-    successRedirect: '/hospital',
-    failureRedirect: '/login',
-    failureFlash: true
-}))
+app.use('/api', mainRoute)
 
 // Server
 app.listen(2020, () => {

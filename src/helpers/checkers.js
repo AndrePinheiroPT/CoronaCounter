@@ -2,7 +2,7 @@ function checkParams(name, password){
 
     let errors = []
 
-    if(name == null || name == undefined || name.length == 0){
+    if(name.trim() === null || name.trim() === undefined || name.trim() === '' || name.length == 0){
         errors.push({text: 'You didnt fill in the name of hospital!'})
     }
     
@@ -17,23 +17,30 @@ function checkParams(name, password){
     return errors
 }
 
-function checkDocs(name, age, sex, nif){
+function checkDocs(name, age, sex, nif, state){
 
     let errors = []
 
-    if(name == null || name == undefined || name.length == 0){
+    if(name.trim() === null || name.trim() === undefined || name.trim() === '' || name.trim().length === 0){
         errors.push({text: 'Write the name!'})
     }
 
-    if(age == null || age == undefined || age.length == 0){
+    if(age === null || age === undefined || age.length === 0){
         errors.push({text: 'Write the age!'})
     }
 
-    if(sex == null || sex == undefined || sex.length == 0){
+    if(sex.trim() === null || sex.trim() === undefined || sex.trim() === '' || sex.length === 0){
         errors.push({text: 'Write the sex!'})
     }
 
-    if(nif == null || nif == undefined || nif.length == 0){
+    if(state.trim() === null || state.trim() === undefined || state.trim() === '' || state.length === 0 ||
+        state.trim().toUpperCase() !== 'POSITIVE' || state.trim().toUpperCase() !== 'NEGATIVE' || 
+        state.trim().toUpperCase() !== 'RECOVERED' || state.trim().toUpperCase() !== 'INCONCLUSIVE' 
+    ){
+        errors.push({text: 'Write the sex!'})
+    }
+
+    if(nif === null || nif === undefined || nif.length === 0){
         errors.push({text: 'Write the age!'})
     }else if(nif.length > 9 || nif.length < 9){
         errors.push({text: 'The nif was incorrect!'})

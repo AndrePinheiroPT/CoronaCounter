@@ -8,7 +8,11 @@ const PeopleController = require('./controllers/PeopleController')
 const hospitalController = new HospitalController
 const peopleController = new PeopleController
 
+
 router.get('/hospital', hospitalController.hospitalList)
+router.remove('/remove-hospital', hospitalController.hospitalRemove)
+router.post('/new-hospital', hospitalController.hospitalCreate)
+router.post('/login', hospitalController.hospitalLogin)
 
 router.get('/people', peopleController.peopleList)
 router.get('/people-state', peopleController.peopleStates)

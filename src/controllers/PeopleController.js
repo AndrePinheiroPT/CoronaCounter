@@ -5,7 +5,7 @@ class PeopleController{
     async peopleList(req, res){
         const peoplesList = await peoples.findAll({ raw: true })
 
-        res.status(400).json(peoplesList)
+        return res.status(200).json(peoplesList)
     }
 
     async peopleStates(req, res){
@@ -35,10 +35,10 @@ class PeopleController{
                 }
             })
 
-            res.status(400).json(stateLength)
+            return res.status(200).json(stateLength)
         }catch(err){
             console.log(err)
-            return res.status(400).send(err)
+            return res.status(500).send(err)
         }
     } 
 
@@ -53,18 +53,19 @@ class PeopleController{
 
                 if(person === null){
                     const newPerson = await peoples.create({ name, age, sex, nif, state })
-                    res.status(400).json(newPerson)
+                    res.status(201).json(newPerson)
                 }else{
                     peoples.update({
                         state: state
                     }, { where: { name: name }})
-                    res.status(400).json(person)
+                    res.status(201).json(person)
                 }
-                
+            }else{
+                return res.status(200).json(erros)
             }
         }catch(err){
             console.log(err)
-            return res.status(400).send(err)
+            return res.status(500).send(err)
         }
     }
 }
