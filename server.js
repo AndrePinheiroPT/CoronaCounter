@@ -14,9 +14,6 @@ const session = require('express-session')
             resave: true,
             saveUninitialized: true
         }))
-    // PassPort
-        app.use(passport.initialize())
-        app.use(passport.session())
     // BodyParser
         app.use(bodyParser.json()) // for parsing application/json
         app.use(bodyParser.urlencoded({ extended: true }))

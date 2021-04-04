@@ -10,7 +10,7 @@ const peopleController = new PeopleController
 
 
 router.get('/hospital', hospitalController.hospitalList)
-router.remove('/remove-hospital', hospitalController.hospitalRemove)
+router.delete('/remove-hospital', hospitalController.hospitalRemove)
 router.post('/new-hospital', hospitalController.hospitalCreate)
 router.post('/login', hospitalController.hospitalLogin)
 
