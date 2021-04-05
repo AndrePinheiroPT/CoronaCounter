@@ -9,13 +9,10 @@ const hospitalController = new HospitalController
 const peopleController = new PeopleController
 
 
-router.get('/hospital', hospitalController.hospitalList)
-router.delete('/remove-hospital', hospitalController.hospitalRemove)
-router.post('/new-hospital', hospitalController.hospitalCreate)
+router.get('/hospital', middleware.checkADM, hospitalController.hospitalList)
+router.delete('/remove-hospital', middleware.checkADM, hospitalController.hospitalRemove)
+router.post('/new-hospital', middleware.checkADM, hospitalController.hospitalCreate)
 router.post('/login', hospitalController.hospitalLogin)
-router.get('/test', middleware.checkADM, (req, res) => {
-    res.status(200).json(req.user)
-})
 
 router.get('/people', peopleController.peopleList)
 router.get('/people-state', peopleController.peopleStates)
