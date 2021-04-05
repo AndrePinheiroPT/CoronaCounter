@@ -14,8 +14,8 @@ router.delete('/remove-hospital', middleware.checkADM, hospitalController.hospit
 router.post('/new-hospital', middleware.checkADM, hospitalController.hospitalCreate)
 router.post('/login', hospitalController.hospitalLogin)
 
-router.get('/people', peopleController.peopleList)
 router.get('/people-state', peopleController.peopleStates)
-router.post('/new-person', peopleController.peopleCreate)
+router.get('/people', middleware.verify, peopleController.peopleList)
+router.post('/new-person', middleware.verify, peopleController.peopleCreate)
 
 module.exports = router
