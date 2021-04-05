@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const middleware = require('./middleware')
-const { checkHospital, checkAdm } = require('./helpers/authenticate')
+const middleware = require('./helpers/middleware')
 
 const HospitalController = require('./controllers/HospitalController')
 const PeopleController = require('./controllers/PeopleController')
@@ -14,7 +13,7 @@ router.get('/hospital', hospitalController.hospitalList)
 router.delete('/remove-hospital', hospitalController.hospitalRemove)
 router.post('/new-hospital', hospitalController.hospitalCreate)
 router.post('/login', hospitalController.hospitalLogin)
-router.get('/test', middleware.verify, (req, res) => {
+router.get('/test', middleware.checkADM, (req, res) => {
     res.status(200).json(req.user)
 })
 

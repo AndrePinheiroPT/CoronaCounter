@@ -7,6 +7,10 @@ const hospitals = db.define('hospitals', {
     },
     password: {
         type: Sequelize.STRING
+    },
+    admim: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0
     }
 })
 
