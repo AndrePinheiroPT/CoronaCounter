@@ -4,10 +4,13 @@ const middleware = require('./helpers/middleware')
 
 const HospitalController = require('./controllers/HospitalController')
 const PeopleController = require('./controllers/PeopleController')
+const PostsController = require('./controllers/PostsController')
 
 const hospitalController = new HospitalController
 const peopleController = new PeopleController
 
+router.get('/posts', middleware.checkHOSPITAL, PostsController.postList)
+router.post('/new-post', middleware.checkHOSPITAL, PostsController.postCreate)
 
 router.get('/hospital', middleware.checkADM, hospitalController.hospitalList)
 router.delete('/remove-hospital', middleware.checkADM, hospitalController.hospitalRemove)
